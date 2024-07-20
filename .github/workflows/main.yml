@@ -1,0 +1,52 @@
+name: "Build & Release"
+
+on:
+  push:
+    branches: main
+    
+
+jobs:
+    build:
+        name: Build & Release
+        runs-on: windows-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+
+            - name: Setup-Java
+              uses: actions/setup-java@v3.12.0
+              with:
+                distribution: 'oracle'
+                java-version: '17'
+
+            - name: Setup Flutter
+              uses: subosito/flutter-action@v2
+              with:
+                flutter-version: '3.19.4'
+                channel: 'stable'
+           
+            - name: Install Dependencies
+              run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git
+            
+            - name: Install Dependencies
+              run: cd DoodleMoviesApp && npm install
+
+            - name: Build App files
+              run: cd android && ./gradlew assembleRelease
+
+            - name: Rename APK file
+              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-release-1.8.0.apk" -NewName "Doodle Movies v1.8.0.apk"
+            
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v2
+              with:
+                name: Release
+                path: |
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies v1.8.0.apk
+            - name: Create Release
+              uses: ncipollo/release-action@v1
+              with:
+                artifacts: |
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies v1.8.0.apk
+                tag: v1.8.0
+                token: ${{secrets.SECRET_KEY}}
