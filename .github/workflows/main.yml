@@ -25,14 +25,14 @@ jobs:
                 flutter-version: '3.19.4'
                 channel: 'stable'
            
-            - name: Install Dependencies
+            - name: Clone Repository
               run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git
             
             - name: Install Dependencies
               run: cd DoodleMoviesApp && npm install
 
             - name: Build App files
-              run: cd android && ./gradlew assembleRelease
+              run: cd DoodleMoviesApp/android && ./gradlew assembleRelease
 
             - name: Rename APK file
               run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-release-1.8.0.apk" -NewName "Doodle Movies v1.8.0.apk"
