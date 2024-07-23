@@ -35,18 +35,18 @@ jobs:
               run: cd DoodleMoviesApp/android && ./gradlew assembleRelease
 
             - name: Rename APK file
-              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-release-1.8.0.apk" -NewName "Doodle Movies v1.8.0.apk"
+              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-release-2.5.0.apk" -NewName "Doodle Movies v2.5.0.apk"
             
             - name: Upload Artifacts
               uses: actions/upload-artifact@v2
               with:
                 name: Release
                 path: |
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies v1.8.0.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies v2.5.0.apk
             - name: Create Release
               uses: ncipollo/release-action@v1
               with:
                 artifacts: |
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies v1.8.0.apk
-                tag: v1.8.0
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies v2.5.0.apk
+                tag: v2.5.0
                 token: ${{secrets.SECRET_KEY}}
