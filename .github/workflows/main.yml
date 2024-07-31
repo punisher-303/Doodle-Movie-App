@@ -29,28 +29,28 @@ jobs:
               run: cd DoodleMoviesApp/android && ./gradlew assembleRelease
 
             - name: Rename APK file
-              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-universal-release-2.5.0.apk" -NewName "Doodle Movies-Universal-v2.5.0.apk"
+              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-universal-v3.0.0.apk" -NewName "Doodle Movies-Universal-v3.0.0.apk"
             
             - name: Rename v7a APK file
-              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-armeabi-v7a-release-2.5.0.apk" -NewName "Doodle Movies-32bit-v2.5.0.apk"
+              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-armeabi-v7a-v3.0.0.apk" -NewName "Doodle Movies-32bit-v3.0.0.apk"
             
             - name: Rename v8a APK file
-              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-arm64-v8a-release-2.5.0.apk" -NewName "Doodle Movies-64bit-v2.5.0.apk"
+              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-arm64-v8a-v3.0.0.apk" -NewName "Doodle Movies-64bit-v3.0.0.apk"
                
             - name: Upload Artifacts
               uses: actions/upload-artifact@v2
               with:
                 name: Release
                 path: |
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-Universal-v2.5.0.apk
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-32bit-v2.5.0.apk
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-64bit-v2.5.0.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-Universal-v3.0.0.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-32bit-v3.0.0.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-64bit-v3.0.0.apk
             - name: Create Release
               uses: ncipollo/release-action@v1
               with:
                 artifacts: |
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-Universal-v2.5.0.apk
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-32bit-v2.5.0.apk
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-64bit-v2.5.0.apk
-                tag: v2.5.0
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-Universal-v3.0.0.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-32bit-v3.0.0.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-64bit-v3.0.0.apk
+                tag: v3.0.0
                 token: ${{secrets.SECRET_KEY}}
