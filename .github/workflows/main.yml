@@ -25,6 +25,20 @@ jobs:
             - name: Install Dependencies
               run: cd DoodleMoviesApp && npm install
 
+            - name: Create keystore file
+              run: |
+                  $b64 = "${{ secrets.KEY_STORE }}"
+                  $filename = "./DoodleMoviesApp/android/Doodle.jks"
+                  $bytes = [Convert]::FromBase64String($b64)
+                  [IO.File]::WriteAllBytes($filename, $bytes)     
+              # run: echo "${{ secrets.KEY_STORE }}" | base64 --decode > ./android/Doodle.jks
+
+            - name: Create Keystore properties
+              run: |
+                  echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ./DoodleMoviesApp/android/key.properties
+                  echo storePassword=\${{ secrets.STORE_PASSWORD }} >> ./DoodleMoviesApp/android/key.properties
+                  echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./DoodleMoviesApp/android/key.properties  
+            
             - name: Build App file
               run: cd DoodleMoviesApp/android && ./gradlew assembleRelease
 
