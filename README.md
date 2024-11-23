@@ -28,26 +28,21 @@ For Software:
 - React Native
 - VSCODE
 
-### Implementation
-For Software:
-
-### Project Documentation
-For Software:
-
 # Screenshots (Add at least 3)
-![Screenshot1](https://imgur.com/a/eZN9xib Home page)
-*Home Page*
+Home Page
+https://imgur.com/a/eZN9xib
 
-![Screenshot2](https://imgur.com/a/q15ZCB2 Search Result)
-*Search result*
+Search result
+https://imgur.com/a/q15ZCB2
 
-![Screenshot3](https://imgur.com/a/5qlq2Kh Settings)
-*Settings*
+Settings
+https://imgur.com/a/5qlq2Kh
+
 
 ### Project Demo
 # Video
-[https://drive.google.com/file/d/1s-TqeR8CqqLSI7bs0mK03vbdZK9JRrw8/view?usp=sharing]
-*App ui and working demo*
+App ui and working demo
+https://drive.google.com/file/d/1s-TqeR8CqqLSI7bs0mK03vbdZK9JRrw8/view?usp=sharing
 
 
 ---
