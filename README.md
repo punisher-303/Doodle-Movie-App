@@ -1,6 +1,6 @@
 <img width="1280" alt="readme-banner" src="https://github.com/user-attachments/assets/35332e92-44cb-425b-9dff-27bcf1023c6c">
 
-# DOODLE MOVIES 🎯
+# DOODLE MOVIES
 Doodle App does not store any media files on our servers and is not directly linked to the media. Third-party services host all media, and Vega App merely provides a search and web scraping tool that indexes publicly available data. We are not responsible for the content or availability of the media, as we do not host or control any of it.
 
 ## Basic Details
@@ -8,7 +8,6 @@ Doodle App does not store any media files on our servers and is not directly lin
 
 ### Team Members
 - Team Lead: ANAND PM - VJCET
-- Member 2: MM Ananthapadmanaabhan - VJCET
 
 ### Project Description
 Doodle movies is an app for streaming movies from multiple providers you can easely access all kinda movies and animes in one app
@@ -28,22 +27,9 @@ For Software:
 - React Native
 - VSCODE
 
-# Screenshots (Add at least 3)
-Home Page
-https://imgur.com/a/eZN9xib
-
-Search result
-https://imgur.com/a/q15ZCB2
-
-Settings
-https://imgur.com/a/5qlq2Kh
-
-
-### Project Demo
-# Video
-App ui and working demo
-https://drive.google.com/file/d/1s-TqeR8CqqLSI7bs0mK03vbdZK9JRrw8/view?usp=sharing
-
+## Screen Shots
+![pixelcut-export (3)](https://github.com/user-attachments/assets/fddcccda-6071-464c-84f1-f6c9f180d3d9)
+![pixelcut-export (2)](https://github.com/user-attachments/assets/b0d6f98e-e18d-4b3e-94c2-9d01ae163dd5)
 
 ---
 Made with ❤️ at TinkerHub Useless Projects 
