@@ -1,5 +1,7 @@
 <img width="1280" alt="readme-banner" src="https://github.com/user-attachments/assets/35332e92-44cb-425b-9dff-27bcf1023c6c">
-![pixelcut-export (4)](https://github.com/user-attachments/assets/968e8f21-9187-415d-9c42-d7ad6cb91490)
+
+![pixelcut-export (4)](https://github.com/user-attachments/assets/d8e92687-b5da-4e42-aaa5-5e53dc677954)
+
 # DOODLE MOVIES
 Doodle App does not store any media files on our servers and is not directly linked to the media. Third-party services host all media, and Vega App merely provides a search and web scraping tool that indexes publicly available data. We are not responsible for the content or availability of the media, as we do not host or control any of it.
 
