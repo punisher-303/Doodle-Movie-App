@@ -1,5 +1,4 @@
 <img width="1280" alt="readme-banner" src="https://github.com/user-attachments/assets/35332e92-44cb-425b-9dff-27bcf1023c6c">
-
 <img width="1280" alt="readme-logo" src="https://github.com/user-attachments/assets/3b3a2eff-5577-4b7e-9790-e559c74d26e7">
 
 # DOODLE MOVIES
