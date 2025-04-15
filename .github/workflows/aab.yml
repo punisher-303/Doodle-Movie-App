@@ -7,7 +7,7 @@ on:
 
 jobs:
     build:
-        name: Build & Release
+        name: Build & AAB
         runs-on: windows-latest
         steps:
             - name: Checkout Repository
