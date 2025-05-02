@@ -30,9 +30,6 @@ ___
 ## Basic Details
 ### Team Name: GHOST
 
-### Team Members
-- Team Lead: ANAND PM - VJCET
-- 
 ### Project Description
 Doodle movies is an app for streaming movies from multiple providers you can easely access all kinda movies and animes in one app
 
