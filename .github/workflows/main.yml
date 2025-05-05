@@ -22,11 +22,11 @@ jobs:
             - name: Clone Repository
               run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git
             
-            - name: Refresh dependencies
-              run: cd DoodleMoviesApp/android && ./gradlew --refresh-dependencies
-
             - name: Install Dependencies
               run: cd DoodleMoviesApp && npm install
+
+            - name: Refresh dependencies
+              run: cd DoodleMoviesApp/android && ./gradlew --refresh-dependencies
 
             - name: Create keystore file
               run: |
