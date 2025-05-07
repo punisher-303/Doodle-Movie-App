@@ -25,9 +25,6 @@ jobs:
             - name: Install Dependencies
               run: cd DoodleMoviesApp && npm install
 
-            - name: Refresh dependencies
-              run: cd DoodleMoviesApp/android && ./gradlew --refresh-dependencies
-
             - name: Create keystore file
               run: |
                   $b64 = "${{ secrets.KEY_STORE }}"
