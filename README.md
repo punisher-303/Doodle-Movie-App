@@ -4,6 +4,20 @@ Doodle App does not store any media files on our servers and is not directly lin
 Note: Download Universal version if armeabi-v7a and arm64-v8a are not working for your device.
 
 [![Download Apk](https://custom-icon-badges.demolab.com/badge/-Download_Apk-blue?style=for-the-badge&logo=download&logoColor=white "Download Apk")](https://github.com/punisher-303/vDoodle-Movie-App/releases)
+## Basic Details
+### Team Name: GHOST
+
+### Project Description
+Doodle movies is an app for streaming movies from multiple providers you can easely access all kinda movies and animes in one app
+
+### The Problem (that doesn't exist)
+Most of the peoples are purchasing different types of platform for watching movies and animes , but lote of people facing lack of availability of movies ,
+But in our case we are not asking any amounts of membership and we are not collecting any kindof privat datas and details of a persion. 
+There is not limit for getting new movies no need multiple platfors of websites for watching movies all are in a single platform .
+
+### The Solution (that nobody asked for)
+We are collecting all kind of free movies websites and add this all webserver in to an app through api , and we can access all free movies in asingle app .
+
 <br>
 ___
 ![pixelcut-export (3)](https://github.com/user-attachments/assets/fddcccda-6071-464c-84f1-f6c9f180d3d9)
@@ -23,20 +37,6 @@ ___
 
 
 </p>
-
-## Basic Details
-### Team Name: GHOST
-
-### Project Description
-Doodle movies is an app for streaming movies from multiple providers you can easely access all kinda movies and animes in one app
-
-### The Problem (that doesn't exist)
-Most of the peoples are purchasing different types of platform for watching movies and animes , but lote of people facing lack of availability of movies ,
-But in our case we are not asking any amounts of membership and we are not collecting any kindof privat datas and details of a persion. 
-There is not limit for getting new movies no need multiple platfors of websites for watching movies all are in a single platform .
-
-### The Solution (that nobody asked for)
-We are collecting all kind of free movies websites and add this all webserver in to an app through api , and we can access all free movies in asingle app .
 
 ## Stars
  <picture>
