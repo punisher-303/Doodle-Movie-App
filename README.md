@@ -1,6 +1,3 @@
-<img width="1280" alt="readme-banner" src="https://github.com/user-attachments/assets/35332e92-44cb-425b-9dff-27bcf1023c6c">
-<img width="1280" alt="readme-logo" src="https://github.com/user-attachments/assets/3b3a2eff-5577-4b7e-9790-e559c74d26e7">
-
 # DOODLE MOVIES
 Doodle App does not store any media files on our servers and is not directly linked to the media. Third-party services host all media, and Doodle App merely provides a search and web scraping tool that indexes publicly available data. We are not responsible for the content or availability of the media, as we do not host or control any of it.
 ## Download  ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/punisher-303/Doodle-Movie-App/total?link=https%3A%2F%2Fgithub.com%2Fpunisher-303%2FDoodle-Movie-App%2Freleases)
@@ -50,8 +47,6 @@ We are collecting all kind of free movies websites and add this all webserver in
 </a>
 
 ---
-Made with ❤️ at TinkerHub Useless Projects 
+Made with ❤️ at AnandPM from Kerala 
 
-![Static Badge](https://img.shields.io/badge/TinkerHub-24?color=%23000000&link=https%3A%2F%2Fwww.tinkerhub.org%2F)
-![Static Badge](https://img.shields.io/badge/UselessProject--24-24?link=https%3A%2F%2Fwww.tinkerhub.org%2Fevents%2FQ2Q1TQKX6Q%2FUseless%2520Projects)
 
