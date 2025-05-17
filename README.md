@@ -17,7 +17,6 @@ There is not limit for getting new movies no need multiple platfors of websites 
 
 ### The Solution (that nobody asked for)
 We are collecting all kind of free movies websites and add this all webserver in to an app through api , and we can access all free movies in asingle app .
-
 <br>
 ___
 ![pixelcut-export (3)](https://github.com/user-attachments/assets/fddcccda-6071-464c-84f1-f6c9f180d3d9)
