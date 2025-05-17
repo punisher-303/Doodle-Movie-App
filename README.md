@@ -4,7 +4,6 @@ Doodle App does not store any media files on our servers and is not directly lin
 Note: Download Universal version if armeabi-v7a and arm64-v8a are not working for your device.
 
 [![Download Apk](https://custom-icon-badges.demolab.com/badge/-Download_Apk-blue?style=for-the-badge&logo=download&logoColor=white "Download Apk")](https://github.com/punisher-303/vDoodle-Movie-App/releases)
-## Basic Details
 ### Team Name: GHOST
 ## Stack
 <p align="left">
