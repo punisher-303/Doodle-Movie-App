@@ -21,9 +21,6 @@ jobs:
                 
             - name: Clone Repository
               run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git
-            
-            - name: Install nativewind
-              run: cd DoodleMoviesApp && npm install nativewind@latest postcss@latest
 
             - name: Install Dependencies
               run: cd DoodleMoviesApp && npm install
