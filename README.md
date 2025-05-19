@@ -1,17 +1,10 @@
-<img width="1280" alt="readme-banner" src="https://github.com/user-attachments/assets/35332e92-44cb-425b-9dff-27bcf1023c6c">
-<img width="1280" alt="readme-logo" src="https://github.com/user-attachments/assets/3b3a2eff-5577-4b7e-9790-e559c74d26e7">
-
 # DOODLE MOVIES
 Doodle App does not store any media files on our servers and is not directly linked to the media. Third-party services host all media, and Doodle App merely provides a search and web scraping tool that indexes publicly available data. We are not responsible for the content or availability of the media, as we do not host or control any of it.
 ## Download  ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/punisher-303/Doodle-Movie-App/total?link=https%3A%2F%2Fgithub.com%2Fpunisher-303%2FDoodle-Movie-App%2Freleases)
 Note: Download Universal version if armeabi-v7a and arm64-v8a are not working for your device.
 
 [![Download Apk](https://custom-icon-badges.demolab.com/badge/-Download_Apk-blue?style=for-the-badge&logo=download&logoColor=white "Download Apk")](https://github.com/punisher-303/vDoodle-Movie-App/releases)
-<br>
-___
-![pixelcut-export (3)](https://github.com/user-attachments/assets/fddcccda-6071-464c-84f1-f6c9f180d3d9)
-![pixelcut-export (2)](https://github.com/user-attachments/assets/b0d6f98e-e18d-4b3e-94c2-9d01ae163dd5)
-___
+### Team Name: GHOST
 ## Stack
 <p align="left">
      
@@ -27,9 +20,6 @@ ___
 
 </p>
 
-## Basic Details
-### Team Name: GHOST
-
 ### Project Description
 Doodle movies is an app for streaming movies from multiple providers you can easely access all kinda movies and animes in one app
 
@@ -40,6 +30,11 @@ There is not limit for getting new movies no need multiple platfors of websites 
 
 ### The Solution (that nobody asked for)
 We are collecting all kind of free movies websites and add this all webserver in to an app through api , and we can access all free movies in asingle app .
+<br>
+___
+![pixelcut-export (3)](https://github.com/user-attachments/assets/fddcccda-6071-464c-84f1-f6c9f180d3d9)
+![pixelcut-export (2)](https://github.com/user-attachments/assets/b0d6f98e-e18d-4b3e-94c2-9d01ae163dd5)
+___
 
 ## Stars
  <picture>
@@ -50,8 +45,6 @@ We are collecting all kind of free movies websites and add this all webserver in
 </a>
 
 ---
-Made with ❤️ at TinkerHub Useless Projects 
+Made with ❤️ at AnandPM from Kerala 
 
-![Static Badge](https://img.shields.io/badge/TinkerHub-24?color=%23000000&link=https%3A%2F%2Fwww.tinkerhub.org%2F)
-![Static Badge](https://img.shields.io/badge/UselessProject--24-24?link=https%3A%2F%2Fwww.tinkerhub.org%2Fevents%2FQ2Q1TQKX6Q%2FUseless%2520Projects)
 
