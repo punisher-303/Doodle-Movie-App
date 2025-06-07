@@ -48,15 +48,15 @@ jobs:
                VERSION="9.5.6"
                AAB_FILE=$(find DoodleMoviesApp/android/app/build/outputs/bundle/release/ -name "*.aab" | head -1)
                if [ -f "$AAB_FILE" ]; then
-               TARGET_NAME="Doodle Movies Bundle-v${VERSION}.aab"
-               TARGET_PATH="DoodleMoviesApp/android/app/build/outputs/bundle/release/${TARGET_NAME}"
-               echo "Found AAB file: $AAB_FILE"
-               echo "Renaming to: $TARGET_NAME"
-               mv "$AAB_FILE" "$TARGET_PATH"
-               echo "AAB renamed successfully."
+                 TARGET_NAME="Doodle Movies Bundle-v${VERSION}.aab"
+                 TARGET_PATH="DoodleMoviesApp/android/app/build/outputs/bundle/release/${TARGET_NAME}"
+                 echo "Found AAB file: $AAB_FILE"
+                 echo "Renaming to: $TARGET_NAME"
+                 mv "$AAB_FILE" "$TARGET_PATH"
+                 echo "AAB renamed successfully."
                else
-               echo "No AAB file found to rename."
-               exit 1
+                 echo "No AAB file found to rename."
+                 exit 1
                fi
               
             - name: Upload Artifacts
