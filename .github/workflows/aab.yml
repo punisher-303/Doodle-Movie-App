@@ -43,20 +43,20 @@ jobs:
               run: cd DoodleMoviesApp/android && ./gradlew bundleRelease
 
             - name: Rename APK file
-              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle-v9.5.5.aab" -NewName "Doodle Movies Bundle-v9.5.5.aab"
+              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle-v9.5.6.aab" -NewName "Doodle Movies Bundle-v9.5.6.aab"
 
             - name: Upload Artifacts
               uses: actions/upload-artifact@v4
               with:
                 name: Release
                 path: |
-                  DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.5.5.aab
+                  DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.5.6.aab
             - name: Create Release
               uses: ncipollo/release-action@v1
               with:
                 artifacts: |
-                  DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.5.5.aab
-                tag: v9.5.5
+                  DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.5.6.aab
+                tag: v9.5.6
                 token: ${{secrets.SECRET_KEY}}
                 prerelease: true
                 overwrite: true
