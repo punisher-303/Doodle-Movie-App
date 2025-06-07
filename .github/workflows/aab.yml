@@ -43,8 +43,11 @@ jobs:
               run: cd DoodleMoviesApp/android && ./gradlew bundleRelease
 
             - name: Rename APK file
-              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle-v9.5.6.aab" -NewName "Doodle Movies Bundle-v9.5.6.aab"
-
+              run: | 
+               AAB_PATH=$(find DoodleMoviesApp/android/app/build/outputs/bundle/release/ -name "*.aab" | head -n 1)
+               echo "Found AAB file: $AAB_PATH"
+               mv "$AAB_PATH" "DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.5.6.aab"
+              
             - name: Upload Artifacts
               uses: actions/upload-artifact@v4
               with:
