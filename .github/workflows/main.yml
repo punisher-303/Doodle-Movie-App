@@ -68,4 +68,6 @@ jobs:
                   DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-64bit-v9.5.6.apk
                 tag: v9.5.6
                 token: ${{secrets.SECRET_KEY}}
-                prerelease: true
+                prerelease: false
+                allowUpdates: true
+                omitBody: true
