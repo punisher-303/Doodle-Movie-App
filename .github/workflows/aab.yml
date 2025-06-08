@@ -71,6 +71,5 @@ jobs:
                 artifacts: |
                   DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.5.6.aab
                 tag: v9.5.6
-                token: ${{secrets.SECRET_KEY}}
-                prerelease: true
+                token: ${{secrets.SECRET_KEY}}               
                 allowUpdates: true
