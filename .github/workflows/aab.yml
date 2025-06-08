@@ -74,3 +74,4 @@ jobs:
                 token: ${{secrets.SECRET_KEY}}               
                 allowUpdates: true
                 omitBody: true
+                removeArtifacts: true
