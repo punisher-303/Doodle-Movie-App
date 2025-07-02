@@ -23,7 +23,17 @@ jobs:
               run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git
 
             - name: Install Dependencies
-              run: cd DoodleMoviesApp && npm install
+              run: |
+                cd DoodleMoviesApp
+                npm install
+                npm install patch-package postinstall-postinstall
+
+            - name: Patch expo-modules-core (Fix Kotlin Error)
+              run: |
+                cd DoodleMoviesApp
+                $filePath = "node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt"
+                (Get-Content $filePath) -replace 'val permissions = permissionsList.toTypedArray\(\)', 'val permissions = permissionsList?.toTypedArray() ?: emptyArray<String>()' | Set-Content $filePath
+                npx patch-package expo-modules-core
 
             - name: Create keystore file
               run: |
@@ -43,30 +53,30 @@ jobs:
               run: cd DoodleMoviesApp/android && ./gradlew assembleRelease
 
             - name: Rename APK file
-              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-universal-v9.6.0.apk" -NewName "Doodle Movies-Universal-v9.6.0.apk"
+              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-universal-v9.6.1.apk" -NewName "Doodle Movies-Universal-v9.6.1.apk"
             
             - name: Rename v7a APK file
-              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-armeabi-v7a-v9.6.0.apk" -NewName "Doodle Movies-32bit-v9.6.0.apk"
+              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-armeabi-v7a-v9.6.1.apk" -NewName "Doodle Movies-32bit-v9.6.1.apk"
             
             - name: Rename v8a APK file
-              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-arm64-v8a-v9.6.0.apk" -NewName "Doodle Movies-64bit-v9.6.0.apk"
+              run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-arm64-v8a-v9.6.1.apk" -NewName "Doodle Movies-64bit-v9.6.1.apk"
                
             - name: Upload Artifacts
               uses: actions/upload-artifact@v4
               with:
                 name: Release
                 path: |
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-Universal-v9.6.0.apk
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-32bit-v9.6.0.apk
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-64bit-v9.6.0.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-Universal-v9.6.1.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-32bit-v9.6.1.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-64bit-v9.6.1.apk
             - name: Create Release
               uses: ncipollo/release-action@v1
               with:
                 artifacts: |
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-Universal-v9.6.0.apk
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-32bit-v9.6.0.apk
-                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-64bit-v9.6.0.apk
-                tag: v9.6.0
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-Universal-v9.6.1.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-32bit-v9.6.1.apk
+                  DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle Movies-64bit-v9.6.1.apk
+                tag: v9.6.1
                 token: ${{secrets.SECRET_KEY}}
                 prerelease: true
                 allowUpdates: true
