@@ -28,12 +28,6 @@ jobs:
                 npm install
                 npm install patch-package postinstall-postinstall
 
-            - name: Fix Expo Modules Kotlin Error
-              run: |
-                cd DoodleMoviesApp
-                filePath="node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt"
-                sed -i 's/val permissions = permissionsList.toTypedArray()/val permissions = permissionsList?.toTypedArray() ?: emptyArray<String>()/' $filePath
-
             - name: Create keystore file
               run: |
                   $b64 = "${{ secrets.KEY_STORE }}"
