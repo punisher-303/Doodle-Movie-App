@@ -32,8 +32,11 @@ jobs:
               run: |
                 cd DoodleMoviesApp
                 $filePath = "node_modules/expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt"
-                (Get-Content $filePath) -replace 'val permissions = permissionsList.toTypedArray\(\)', 'val permissions = permissionsList?.toTypedArray() ?: emptyArray<String>()' | Set-Content $filePath
-                npx patch-package expo-modules-core
+                $tempFile = "PermissionsService_temp.kt"
+                (Get-Content $filePath) -replace 'val permissions = permissionsList.toTypedArray\(\)', 'val permissions = permissionsList?.toTypedArray() ?: emptyArray<String>()' | Out-File -FilePath $tempFile
+                Remove-Item -Path $filePath
+                Move-Item -Path $tempFile -Destination $filePath
+                npx patch-package expo-modules-core --include expo-modules-core/android/src/main/java/expo/modules/adapters/react/permissions/PermissionsService.kt
 
             - name: Create keystore file
               run: |
