@@ -26,7 +26,6 @@ jobs:
               run: |
                 cd DoodleMoviesApp
                 npm install
-                npm install patch-package postinstall-postinstall
 
             - name: Create keystore file
               run: |
