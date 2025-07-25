@@ -30,16 +30,16 @@ jobs:
         run: |
           cd Doodle
           $b64 = "${{ secrets.KEY_STORE }}"
-          $filename = "./android/Doodle.jks"
+          $filename = "./Doodle/android/Doodle.jks"
           $bytes = [Convert]::FromBase64String($b64)
           [IO.File]::WriteAllBytes($filename, $bytes)
 
       - name: Create Keystore properties
         run: |
           cd Doodle
-          echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ./android/key.properties
-          echo storePassword=\${{ secrets.STORE_PASSWORD }} >> ./android/key.properties
-          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./android/key.properties
+          echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ./Doodle/android/key.properties
+          echo storePassword=\${{ secrets.STORE_PASSWORD }} >> ./Doodle/android/key.properties
+          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./Doodle/android/key.properties
 
       - name: Build App file
         run: |
@@ -49,12 +49,11 @@ jobs:
       - name: Rename AAB file
         shell: bash
         run: |
-          cd Doodle
           VERSION="9.6.4"
-          AAB_FILE=$(find android/app/build/outputs/bundle/release/ -name "*.aab" | head -1)
+          AAB_FILE=$(find Doodle/android/app/build/outputs/bundle/release/ -name "*.aab" | head -1)
           if [ -f "$AAB_FILE" ]; then
             TARGET_NAME="Doodle Movies Bundle-v${VERSION}.aab"
-            TARGET_PATH="android/app/build/outputs/bundle/release/${TARGET_NAME}"
+            TARGET_PATH="Doodle/android/app/build/outputs/bundle/release/${TARGET_NAME}"
             echo "Found AAB file: $AAB_FILE"
             echo "Renaming to: $TARGET_NAME"
             mv "$AAB_FILE" "$TARGET_PATH"

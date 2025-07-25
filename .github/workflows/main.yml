@@ -28,18 +28,16 @@ jobs:
 
       - name: Create keystore file
         run: |
-          cd Doodle
           $b64 = "${{ secrets.KEY_STORE }}"
-          $filename = "./android/Doodle.jks"
+          $filename = "./Doodle/android/Doodle.jks"
           $bytes = [Convert]::FromBase64String($b64)
           [IO.File]::WriteAllBytes($filename, $bytes)
 
       - name: Create Keystore properties
         run: |
-          cd Doodle
-          echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ./android/key.properties
-          echo storePassword=\${{ secrets.STORE_PASSWORD }} >> ./android/key.properties
-          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./android/key.properties
+          echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ./Doodle/android/key.properties
+          echo storePassword=\${{ secrets.STORE_PASSWORD }} >> ./Doodle/android/key.properties
+          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./Doodle/android/key.properties
 
       - name: Build App file
         run: |
