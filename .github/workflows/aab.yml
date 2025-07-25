@@ -42,7 +42,9 @@ jobs:
                   echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./DoodleMoviesApp/android/key.properties  
             
             - name: Build App file
-              run: cd DoodleMoviesApp/android && ./gradlew bundleRelease
+              run: |
+                  cd DoodleMoviesApp/android 
+                  ./gradlew bundleRelease
 
             - name: Rename APK file
               shell: bash

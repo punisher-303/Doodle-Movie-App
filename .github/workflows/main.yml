@@ -42,7 +42,9 @@ jobs:
                   echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./DoodleMoviesApp/android/key.properties  
             
             - name: Build App file
-              run: cd DoodleMoviesApp/android && ./gradlew assembleRelease
+              run: |
+                  cd DoodleMoviesApp/android 
+                  ./gradlew assembleRelease
 
             - name: Rename APK file
               run: Rename-Item -Path "DoodleMoviesApp/android/app/build/outputs/apk/release/Doodle-universal-v9.6.4.apk" -NewName "Doodle Movies-Universal-v9.6.4.apk"
