@@ -3,79 +3,79 @@ name: "Build & AAB"
 on:
   workflow_dispatch:
     branches: main
-    
 
 jobs:
-    build:
-        name: Build & AAB
-        runs-on: windows-latest
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v4
+  build:
+    name: Build & AAB
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-            - name: Setup-Java
-              uses: actions/setup-java@v3.12.0
-              with:
-                distribution: 'oracle'
-                java-version: '17'
-                
-            - name: Clone Repository
-              run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git
-            
-            - name: Install Dependencies
-              run: |
-                cd DoodleMoviesApp
-                npm install
+      - name: Setup-Java
+        uses: actions/setup-java@v3.12.0
+        with:
+          distribution: 'oracle'
+          java-version: '17'
 
-            - name: Create keystore file
-              run: |
-                  $b64 = "${{ secrets.KEY_STORE }}"
-                  $filename = "./DoodleMoviesApp/android/Doodle.jks"
-                  $bytes = [Convert]::FromBase64String($b64)
-                  [IO.File]::WriteAllBytes($filename, $bytes)     
-              # run: echo "${{ secrets.KEY_STORE }}" | base64 --decode > ./android/Doodle.jks
+      - name: Clone Repository
+        run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git Doodle  # Changed: Clones into shorter "./Doodle"
 
-            - name: Create Keystore properties
-              run: |
-                  echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ./DoodleMoviesApp/android/key.properties
-                  echo storePassword=\${{ secrets.STORE_PASSWORD }} >> ./DoodleMoviesApp/android/key.properties
-                  echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./DoodleMoviesApp/android/key.properties  
-            
-            - name: Build App file
-              run: |
-                  cd DoodleMoviesApp/android 
-                  ./gradlew bundleRelease
+      - name: Install Dependencies
+        run: |
+          cd Doodle
+          npm install
 
-            - name: Rename APK file
-              shell: bash
-              run: | 
-               VERSION="9.6.4"
-               AAB_FILE=$(find DoodleMoviesApp/android/app/build/outputs/bundle/release/ -name "*.aab" | head -1)
-               if [ -f "$AAB_FILE" ]; then
-                 TARGET_NAME="Doodle Movies Bundle-v${VERSION}.aab"
-                 TARGET_PATH="DoodleMoviesApp/android/app/build/outputs/bundle/release/${TARGET_NAME}"
-                 echo "Found AAB file: $AAB_FILE"
-                 echo "Renaming to: $TARGET_NAME"
-                 mv "$AAB_FILE" "$TARGET_PATH"
-                 echo "AAB renamed successfully."
-               else
-                 echo "No AAB file found to rename."
-                 exit 1
-               fi
-              
-            - name: Upload Artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                name: Release
-                path: |
-                  DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.6.4.aab
-            - name: Create Release
-              uses: ncipollo/release-action@v1
-              with:
-                artifacts: |
-                  DoodleMoviesApp/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.6.4.aab
-                tag: v9.6.4
-                token: ${{secrets.SECRET_KEY}}               
-                allowUpdates: true
-                omitBody: true
-                prerelease: true
+      - name: Create keystore file
+        run: |
+          cd Doodle
+          $b64 = "${{ secrets.KEY_STORE }}"
+          $filename = "./android/Doodle.jks"
+          $bytes = [Convert]::FromBase64String($b64)
+          [IO.File]::WriteAllBytes($filename, $bytes)
+
+      - name: Create Keystore properties
+        run: |
+          cd Doodle
+          echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ./android/key.properties
+          echo storePassword=\${{ secrets.STORE_PASSWORD }} >> ./android/key.properties
+          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./android/key.properties
+
+      - name: Build App file
+        run: |
+          cd Doodle/android
+          ./gradlew bundleRelease
+
+      - name: Rename AAB file
+        shell: bash
+        run: |
+          cd Doodle
+          VERSION="9.6.4"
+          AAB_FILE=$(find android/app/build/outputs/bundle/release/ -name "*.aab" | head -1)
+          if [ -f "$AAB_FILE" ]; then
+            TARGET_NAME="Doodle Movies Bundle-v${VERSION}.aab"
+            TARGET_PATH="android/app/build/outputs/bundle/release/${TARGET_NAME}"
+            echo "Found AAB file: $AAB_FILE"
+            echo "Renaming to: $TARGET_NAME"
+            mv "$AAB_FILE" "$TARGET_PATH"
+            echo "AAB renamed successfully."
+          else
+            echo "No AAB file found to rename."
+            exit 1
+          fi
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release
+          path: Doodle/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.6.4.aab
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: Doodle/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.6.4.aab
+          tag: v9.6.4
+          token: ${{secrets.SECRET_KEY}}
+          allowUpdates: true
+          omitBody: true
+          prerelease: true
