@@ -47,27 +47,27 @@ jobs:
       - name: Rename APK files
         run: |
           cd Doodle
-          Rename-Item -Path "./android/app/build/outputs/apk/release/Doodle-universal-v9.6.6.apk" -NewName "Doodle Movies-Universal-v9.6.6.apk"
-          Rename-Item -Path "./android/app/build/outputs/apk/release/Doodle-armeabi-v7a-v9.6.6.apk" -NewName "Doodle Movies-32bit-v9.6.6.apk"
-          Rename-Item -Path "./android/app/build/outputs/apk/release/Doodle-arm64-v8a-v9.6.6.apk" -NewName "Doodle Movies-64bit-v9.6.6.apk"
+          Rename-Item -Path "./android/app/build/outputs/apk/release/Doodle-universal-v9.6.7.apk" -NewName "Doodle Movies-Universal-v9.6.7.apk"
+          Rename-Item -Path "./android/app/build/outputs/apk/release/Doodle-armeabi-v7a-v9.6.7.apk" -NewName "Doodle Movies-32bit-v9.6.7.apk"
+          Rename-Item -Path "./android/app/build/outputs/apk/release/Doodle-arm64-v8a-v9.6.7.apk" -NewName "Doodle Movies-64bit-v9.6.7.apk"
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Release
           path: |
-            Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v9.6.6.apk
-            Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v9.6.6.apk
-            Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v9.6.6.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v9.6.7.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v9.6.7.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v9.6.7.apk
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
-            Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v9.6.6.apk
-            Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v9.6.6.apk
-            Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v9.6.6.apk
-          tag: v9.6.6
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v9.6.7.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v9.6.7.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v9.6.7.apk
+          tag: v9.6.7
           token: ${{secrets.SECRET_KEY}}
           prerelease: true
           allowUpdates: true
