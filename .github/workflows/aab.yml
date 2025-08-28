@@ -47,7 +47,7 @@ jobs:
       - name: Rename AAB file
         shell: bash
         run: |
-          VERSION="9.7.0"
+          VERSION="9.7.1"
           AAB_FILE=$(find Doodle/android/app/build/outputs/bundle/release/ -name "*.aab" | head -1)
           if [ -f "$AAB_FILE" ]; then
             TARGET_NAME="Doodle Movies Bundle-v${VERSION}.aab"
@@ -65,13 +65,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Release
-          path: Doodle/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.7.0.aab
+          path: Doodle/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.7.1.aab
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: Doodle/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.7.0.aab
-          tag: v9.7.0
+          artifacts: Doodle/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v9.7.1.aab
+          tag: v9.7.1
           token: ${{secrets.SECRET_KEY}}
           allowUpdates: true
           omitBody: true
