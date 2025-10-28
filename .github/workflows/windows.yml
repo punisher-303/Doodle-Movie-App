@@ -23,21 +23,21 @@ jobs:
           cache: 'npm'
 
       - name: Clone Repository
-        run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/Doodle-Movies-Windows.git
+        run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/Doodle-Movies-Windows.git DoodleMoviesWindows
 
       - name: Install Dependencies
         run: |
-          cd Doodle-Movies-Windows
+          DoodleMoviesWindows
           npm install
 
       - name: Build Provider Bundle
         run: |
-          cd Doodle-Movies-Windows
+          DoodleMoviesWindows
           npm run build
 
       - name: Build Portable Executable
         run: |
-          cd Doodle-Movies-Windows
+          DoodleMoviesWindows
           npm run electron:build:portable
 
       # - name: Build NSIS Installer
@@ -47,7 +47,7 @@ jobs:
 
       - name: Rename Release Files
         run: |
-          cd Doodle-Movies-Windows/release
+          DoodleMoviesWindows/release
           $version = "${{ env.VERSION }}"
           
           # Rename any other main executable (if exists)
@@ -58,7 +58,7 @@ jobs:
 
       - name: List Files After Rename
         run: |
-          cd Doodle-Movies-Windows
+          DoodleMoviesWindows
           dir release
 
       - name: Upload Artifacts
@@ -66,13 +66,13 @@ jobs:
         with:
           name: Windows-Build-v${{ env.VERSION }}
           path: |
-            Doodle-Movies-Windows/release/Doodle.Movies.Windows-v${{ env.VERSION }}.exe
+            DoodleMoviesWindows/release/Doodle.Movies.Windows-v${{ env.VERSION }}.exe
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
-            Doodle-Movies-Windows/release/Doodle.Movies.Windows-v${{ env.VERSION }}.exe
+            DoodleMoviesWindows/release/Doodle.Movies.Windows-v${{ env.VERSION }}.exe
           tag: v${{ env.VERSION }}
           token: ${{ secrets.SECRET_KEY }}
           prerelease: true
