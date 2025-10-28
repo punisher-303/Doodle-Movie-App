@@ -1,0 +1,79 @@
+name: "Build & Release Windows"
+
+on:
+  workflow_dispatch:
+    branches: main
+
+env:
+  VERSION: "2.0.0" # Set your version here or use dynamic versioning
+
+jobs:
+  build-windows:
+    name: Build Windows App
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Clone Repository
+        run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/Doodle-Movies-Windows.git
+
+      - name: Install Dependencies
+        run: |
+          cd Doodle-Movies-Windows
+          npm install
+
+      - name: Build Provider Bundle
+        run: |
+          cd Doodle-Movies-Windows
+          npm run build
+
+      - name: Build Portable Executable
+        run: |
+          cd Doodle-Movies-Windows
+          npm run electron:build:portable
+
+      # - name: Build NSIS Installer
+      #   run: |
+      #     $env:GH_TOKEN="${{ secrets.SECRET_KEY }}"
+      #     npm run electron:build:installer
+
+      - name: Rename Release Files
+        run: |
+          cd Doodle-Movies-Windows/release
+          $version = "${{ env.VERSION }}"
+          
+          # Rename any other main executable (if exists)
+          $mainExe = Get-ChildItem "*.exe" | Where-Object { $_.Name -notlike "*portable*" } | Select-Object -First 1
+          if ($mainExe) {
+            Rename-Item -Path $mainExe.FullName -NewName "Doodle.Movies.Windows-v$version.exe"
+          }
+
+      - name: List Files After Rename
+        run: |
+          cd Doodle-Movies-Windows
+          dir release
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-Build-v${{ env.VERSION }}
+          path: |
+            Doodle-Movies-Windows/release/Doodle.Movies.Windows-v${{ env.VERSION }}.exe
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: |
+            Doodle-Movies-Windows/release/Doodle.Movies.Windows-v${{ env.VERSION }}.exe
+          tag: v${{ env.VERSION }}
+          token: ${{ secrets.SECRET_KEY }}
+          prerelease: true
+          allowUpdates: true
