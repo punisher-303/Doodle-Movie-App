@@ -5,7 +5,7 @@ on:
     branches: main
 
 env:
-  VERSION: "2.0.0" # Set your version here or use dynamic versioning
+  VERSION: "2.0.0"
 
 jobs:
   build-windows:
@@ -23,42 +23,38 @@ jobs:
           cache: 'npm'
 
       - name: Clone Repository
-        run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/Doodle-Movies-Windows.git DoodleMoviesWindows
+        run: git clone https://${{ secrets.SECRET_KEY }}@github.com/punisher-303/Doodle-Movies-Windows.git DoodleMoviesWindows
 
       - name: Install Dependencies
+        shell: cmd
         run: |
-          DoodleMoviesWindows
+          cd DoodleMoviesWindows
           npm install
 
       - name: Build Provider Bundle
+        shell: cmd
         run: |
-          DoodleMoviesWindows
+          cd DoodleMoviesWindows
           npm run build
 
       - name: Build Portable Executable
+        shell: cmd
         run: |
-          DoodleMoviesWindows
+          cd DoodleMoviesWindows
           npm run electron:build:portable
 
-      # - name: Build NSIS Installer
-      #   run: |
-      #     $env:GH_TOKEN="${{ secrets.SECRET_KEY }}"
-      #     npm run electron:build:installer
-
       - name: Rename Release Files
+        shell: cmd
         run: |
-          DoodleMoviesWindows/release
-          $version = "${{ env.VERSION }}"
-          
-          # Rename any other main executable (if exists)
-          $mainExe = Get-ChildItem "*.exe" | Where-Object { $_.Name -notlike "*portable*" } | Select-Object -First 1
-          if ($mainExe) {
-            Rename-Item -Path $mainExe.FullName -NewName "Doodle.Movies.Windows-v$version.exe"
-          }
+          cd DoodleMoviesWindows/release
+          for /f "tokens=*" %%i in ('dir /b *.exe ^| findstr /v portable') do (
+            ren "%%i" "Doodle.Movies.Windows-v%VERSION%.exe"
+          )
 
       - name: List Files After Rename
+        shell: cmd
         run: |
-          DoodleMoviesWindows
+          cd DoodleMoviesWindows
           dir release
 
       - name: Upload Artifacts
@@ -73,7 +69,7 @@ jobs:
         with:
           artifacts: |
             DoodleMoviesWindows/release/Doodle.Movies.Windows-v${{ env.VERSION }}.exe
-          tag: v${{ env.VERSION }}
+          tag: v9.8.0
           token: ${{ secrets.SECRET_KEY }}
           prerelease: true
           allowUpdates: true
