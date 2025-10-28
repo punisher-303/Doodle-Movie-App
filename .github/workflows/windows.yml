@@ -72,5 +72,5 @@ jobs:
             DoodleMoviesWindows/release/Doodle.Movies.Windows-v${{ env.VERSION }}.exe
           tag: v9.8.0
           token: ${{ secrets.SECRET_KEY }}
-          prerelease: true
+          prerelease: false
           allowUpdates: true
