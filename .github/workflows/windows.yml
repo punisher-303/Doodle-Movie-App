@@ -16,14 +16,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Clone Windows Repository
+        run: git clone https://${{ secrets.SECRET_KEY }}@github.com/punisher-303/Doodle-Movies-Windows.git DoodleMoviesWindows
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
-
-      - name: Clone Repository
-        run: git clone https://${{ secrets.SECRET_KEY }}@github.com/punisher-303/Doodle-Movies-Windows.git DoodleMoviesWindows
+          cache-dependency-path: 'DoodleMoviesWindows/package-lock.json'
 
       - name: Install Dependencies
         shell: cmd
