@@ -74,7 +74,7 @@ jobs:
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v${{ env.VERSION }}.apk
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v${{ env.VERSION }}.apk
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v${{ env.VERSION }}.apk
-          tag: v9.8.1
+          tag: v${{ env.VERSION }}
           token: ${{secrets.SECRET_KEY}}
           prerelease: true
           allowUpdates: true
