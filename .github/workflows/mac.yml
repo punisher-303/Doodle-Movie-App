@@ -19,15 +19,12 @@ jobs:
       - name: Clone Repository (Same Codebase)
         run: git clone https://${{ secrets.SECRET_KEY }}@github.com/punisher-303/Doodle-Movies-Windows.git DoodleMoviesMac
 
-      - name: Create macOS Icon
+      - name: Create macOS Icon Directory
         run: |
           cd DoodleMoviesMac
           mkdir -p icons
-          # Install iconutil to create proper .icns file
-          if ! command -v iconutil &> /dev/null; then
-            echo "iconutil not available, creating minimal icon setup"
-          fi
-          # Create a simple icon.icns file or skip icon
+          # Create a simple placeholder to avoid the icon error
+          echo "Creating placeholder icon file"
           touch icons/icon.icns
 
       - name: Setup Node.js
@@ -47,32 +44,57 @@ jobs:
           cd DoodleMoviesMac
           npm run build
 
-      - name: Build macOS App with Skip Icon
+      - name: Build macOS App
         run: |
           cd DoodleMoviesMac
-          # Build without icon to avoid the error
-          npx electron-builder --mac --config.mac.icon=icons/icon.icns --config.forceCodeSigning=false
+          npm run electron:build:mac
 
-      - name: Rename and Prepare Artifacts
+      - name: Find and List Build Files
         run: |
           cd DoodleMoviesMac
-          # Find and rename the built files
-          find release -name "*.dmg" -exec mv {} "release/Doodle.Movies.macOS-v${VERSION}.dmg" \;
-          find release -name "*.zip" -exec mv {} "release/Doodle.Movies.macOS-v${VERSION}.zip" \;
+          find release -name "*.dmg" -o -name "*.zip" | head -10
+
+      - name: Rename Release Files
+        run: |
+          cd DoodleMoviesMac
+          # Find and rename DMG files
+          for file in release/*.dmg release/mac/*.dmg 2>/dev/null; do
+            if [ -f "$file" ]; then
+              mv "$file" "release/Doodle.Movies.macOS-v${VERSION}.dmg"
+            fi
+          done
+          # Find and rename ZIP files
+          for file in release/*.zip release/mac/*.zip 2>/dev/null; do
+            if [ -f "$file" ]; then
+              mv "$file" "release/Doodle.Movies.macOS-v${VERSION}.zip"
+            fi
+          done
+
+      - name: List Files After Rename
+        run: |
+          cd DoodleMoviesMac
+          ls -la release/ || echo "No release directory"
+          ls -la release/mac/ 2>/dev/null || echo "No mac directory"
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: macOS-Build-v${{ env.VERSION }}
           path: |
-            DoodleMoviesMac/release/Doodle.Movies.macOS-v${{ env.VERSION }}.dmg
-            DoodleMoviesMac/release/Doodle.Movies.macOS-v${{ env.VERSION }}.zip
+            DoodleMoviesMac/release/*.dmg
+            DoodleMoviesMac/release/*.zip
+            DoodleMoviesMac/release/mac/*.dmg
+            DoodleMoviesMac/release/mac/*.zip
           if-no-files-found: warn
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "DoodleMoviesMac/release/Doodle.Movies.macOS-v${{ env.VERSION }}.dmg,DoodleMoviesMac/release/Doodle.Movies.macOS-v${{ env.VERSION }}.zip"
+          artifacts: |
+            DoodleMoviesMac/release/*.dmg
+            DoodleMoviesMac/release/*.zip
+            DoodleMoviesMac/release/mac/*.dmg
+            DoodleMoviesMac/release/mac/*.zip
           tag: v${{ env.VERSION }}
           token: ${{ secrets.SECRET_KEY }}
           prerelease: false

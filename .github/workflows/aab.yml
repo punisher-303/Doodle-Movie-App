@@ -78,7 +78,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: Doodle/android/app/build/outputs/bundle/release/Doodle Movies Bundle-v${{ env.VERSION }}.aab
-          tag: v${{ env.VERSION }}
+          tag: v9.8.2
           token: ${{secrets.SECRET_KEY}}
           allowUpdates: true
           omitBody: true
