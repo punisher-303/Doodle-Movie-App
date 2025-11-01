@@ -2,7 +2,12 @@ name: "macOS Release"
 
 on:
   workflow_dispatch:
-    branches: main
+    inputs:
+      version:
+        description: 'Version number'
+        required: true
+        default: '2.0.1'
+        type: string
 
 env:
   VERSION: "2.0.1"
@@ -46,37 +51,47 @@ jobs:
           cd DoodleMoviesMac/release
           # Rename .dmg file
           for file in *.dmg; do
-            if [[ "$file" != *"portable"* ]]; then
-              mv "$file" "Doodle.Movies.macOS-v${VERSION}.dmg"
-            fi
+            mv "$file" "Doodle.Movies.macOS-v${{ env.VERSION }}.dmg"
           done
           # Rename .zip file (if exists)
           for file in *.zip; do
-            if [[ "$file" != *"portable"* ]]; then
-              mv "$file" "Doodle.Movies.macOS-v${VERSION}.zip"
-            fi
+            mv "$file" "Doodle.Movies.macOS-v${{ env.VERSION }}.zip"
           done
+          # Also check mac directory (common output location)
+          if [ -d "mac" ]; then
+            cd mac
+            for file in *.dmg; do
+              mv "$file" "Doodle.Movies.macOS-v${{ env.VERSION }}.dmg"
+            done
+            for file in *.zip; do
+              mv "$file" "Doodle.Movies.macOS-v${{ env.VERSION }}.zip"
+            done
+          fi
 
       - name: List Files After Rename
         run: |
           cd DoodleMoviesMac
-          ls -la release/
+          find release -type f -name "*.dmg" -o -name "*.zip" | head -10
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: macOS-Build-v${{ env.VERSION }}
           path: |
-            DoodleMoviesMac/release/Doodle.Movies.macOS-v${{ env.VERSION }}.dmg
-            DoodleMoviesMac/release/Doodle.Movies.macOS-v${{ env.VERSION }}.zip
+            DoodleMoviesMac/release/**/*.dmg
+            DoodleMoviesMac/release/**/*.zip
+            DoodleMoviesMac/release/*.dmg
+            DoodleMoviesMac/release/*.zip
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
-            DoodleMoviesMac/release/Doodle.Movies.macOS-v${{ env.VERSION }}.dmg
-            DoodleMoviesMac/release/Doodle.Movies.macOS-v${{ env.VERSION }}.zip
-          tag: v9.8.2
+            DoodleMoviesMac/release/**/*.dmg
+            DoodleMoviesMac/release/**/*.zip
+            DoodleMoviesMac/release/*.dmg
+            DoodleMoviesMac/release/*.zip
+          tag: v${{ env.VERSION }}
           token: ${{ secrets.SECRET_KEY }}
           prerelease: false
           allowUpdates: true
