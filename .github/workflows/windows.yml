@@ -74,3 +74,4 @@ jobs:
           token: ${{ secrets.SECRET_KEY }}
           prerelease: false
           allowUpdates: true
+          omitBody: true
