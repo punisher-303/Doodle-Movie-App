@@ -1,11 +1,15 @@
 {
-  "version": "v2.0.3",
+  "latest_version": "2.0.4",
   "download_url": "https://github.com/punisher-303/Doodle-Movie-App/releases/download/v9.8.5/DoodleMoviesWin.exe",
-  "release_notes": "Latest version with new features",
-  "release_date": "2025-11-8",
+  "release_notes": "New version with enhanced features and bug fixes",
   "changelog": [
-    "Live TV & Cricket Streaming",
-    "Advanced Download System",
-    "Improved UI"
-  ]
+    "Added new movie providers",
+    "Improved download performance", 
+    "Fixed video playback issues",
+    "Enhanced user interface",
+    "Bug fixes and stability improvements"
+  ],
+  "published_at": "2025-11-08",
+  "min_required_version": "2.0.0",
+  "update_priority": "normal"
 }
