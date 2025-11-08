@@ -49,7 +49,7 @@ jobs:
         run: |
           cd DoodleMoviesWindows/release
           for /f "tokens=*" %%i in ('dir /b *.exe ^| findstr /v portable') do (
-            ren "%%i" "Doodle.Movies.Windows-v%VERSION%.exe"
+            ren "%%i" "DoodleMoviesWin.exe"
           )
 
       - name: List Files After Rename
@@ -63,13 +63,13 @@ jobs:
         with:
           name: Windows-Build-v${{ env.VERSION }}
           path: |
-            DoodleMoviesWindows/release/Doodle.Movies.Windows-v${{ env.VERSION }}.exe
+            DoodleMoviesWindows/release/DoodleMoviesWin.exe
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: |
-            DoodleMoviesWindows/release/Doodle.Movies.Windows-v${{ env.VERSION }}.exe
+            DoodleMoviesWindows/release/DoodleMoviesWin.exe
           tag: v9.8.5
           token: ${{ secrets.SECRET_KEY }}
           prerelease: false
