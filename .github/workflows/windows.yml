@@ -5,7 +5,7 @@ on:
     branches: main
 
 env:
-  VERSION: "2.0.3"
+  VERSION: "2.0.4"
 
 jobs:
   build-windows:
@@ -70,7 +70,7 @@ jobs:
         with:
           artifacts: |
             DoodleMoviesWindows/release/DoodleMoviesWin.exe
-          tag: v9.8.5
+          tag: v9.8.7
           token: ${{ secrets.SECRET_KEY }}
           prerelease: false
           allowUpdates: true
