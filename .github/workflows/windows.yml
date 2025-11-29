@@ -70,7 +70,7 @@ jobs:
         with:
           artifacts: |
             DoodleMoviesWindows/release/DoodleMoviesWin.exe
-          tag: v9.8.7
+          tag: v9.9.1
           token: ${{ secrets.SECRET_KEY }}
           prerelease: false
           allowUpdates: true
