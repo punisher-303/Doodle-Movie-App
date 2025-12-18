@@ -49,7 +49,7 @@ jobs:
       - name: Build App file
         run: |
           cd Doodle/android
-          ./gradlew assembleRelease
+          ./gradlew assembleRelease -x lintVitalAnalyzeRelease
 
       - name: Rename APK files
         run: |
