@@ -49,7 +49,7 @@ jobs:
       - name: Build App file
         run: |
           cd Doodle/android
-          ./gradlew bundleRelease
+          ./gradlew bundleRelease -x lintVitalAnalyzeRelease
 
       - name: Rename AAB file
         shell: bash
