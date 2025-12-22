@@ -57,7 +57,31 @@ jobs:
           Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-universal-v$v.apk" -NewName "Doodle Movies-Universal-v$v.apk"
           Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-armeabi-v7a-v$v.apk" -NewName "Doodle Movies-32bit-v$v.apk"
           Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-arm64-v8a-v$v.apk" -NewName "Doodle Movies-64bit-v$v.apk"
-
+      
+      - name: Verify 16KB Alignment
+        run: |
+          $v = "${{ env.VERSION }}"
+          # Find the user's Android SDK build-tools zipalign executable
+          $zipalign = Get-ChildItem -Path "$env:ANDROID_HOME\build-tools" -Filter zipalign.exe -Recurse | Select-Object -Last 1
+          Write-Host "Using zipalign: $($zipalign.FullName)"
+          
+          # List of files to verify
+          $apks = @(
+            "./Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v$v.apk",
+            "./Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v$v.apk",
+            "./Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v$v.apk"
+          )
+          # Verification Loop
+          foreach ($apk in $apks) {
+            Write-Host "Verifying alignment for: $apk"
+            # -c: check, -v: verbose, -P 16: 16KB page align, 4: 4-byte zip align
+            & $zipalign.FullName -c -v -P 16 4 $apk
+            if ($LASTEXITCODE -ne 0) {
+              Write-Error "Verification failed for $apk"
+              exit 1
+            }
+          }
+      
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
