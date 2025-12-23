@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-java@v3.12.0
         with:
           distribution: 'oracle'
-          java-version: '17'
+          java-version: '21'
 
       - name: Clone Repository
         run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git Doodle  # Changed: Clones into shorter "./Doodle"

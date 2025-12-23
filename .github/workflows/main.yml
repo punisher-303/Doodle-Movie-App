@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-java@v4  # Update from v3.12.0 to v4
         with:
           distribution: 'temurin'  # Changed from 'oracle' (more reliable on CI)
-          java-version: '17'
+          java-version: '21'
 
       - name: Clone Repository
         run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git Doodle
