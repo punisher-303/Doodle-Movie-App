@@ -80,7 +80,7 @@ jobs:
           allowUpdates: true
           omitBody: true
 
-jobs:
+  AAB_Build:
     name: Build & AAB
     runs-on: windows-latest
     steps:
