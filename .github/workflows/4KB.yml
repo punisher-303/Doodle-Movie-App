@@ -1,0 +1,160 @@
+name: "Build & Release"
+
+on:
+  workflow_dispatch:
+    branches: main
+
+jobs:
+  build:
+    name: Build & Release
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v3.12.0  # Update from v3.12.0 to v4
+        with:
+          distribution: 'temurin'  # Changed from 'oracle' (more reliable on CI)
+          java-version: '17'
+
+      - name: Clone Repository
+        run: git clone -b 4KBUpdate https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git Doodle
+
+      - name: Install Dependencies
+        run: |
+          cd Doodle
+          npm install
+
+      - name: Get Version from package.json
+        id: version
+        shell: pwsh
+        run: |
+          $packageJson = Get-Content -Raw -Path "Doodle\package.json" | ConvertFrom-Json
+          echo "VERSION=$($packageJson.version)" >> $env:GITHUB_ENV
+
+      - name: Create keystore file
+        run: |
+          $b64 = "${{ secrets.KEY_STORE }}"
+          $filename = "./Doodle/android/Doodle.jks"
+          $bytes = [Convert]::FromBase64String($b64)
+          [IO.File]::WriteAllBytes($filename, $bytes)
+
+      - name: Create Keystore properties
+        run: |
+          echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ./Doodle/android/key.properties
+          echo storePassword=\${{ secrets.STORE_PASSWORD }} >> ./Doodle/android/key.properties
+          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./Doodle/android/key.properties
+
+      - name: Build App file
+        run: |
+          cd Doodle/android
+          ./gradlew assembleRelease -x lintVitalAnalyzeRelease
+
+      - name: Rename APK files
+        run: |
+          $v = "${{ env.VERSION }}"
+          Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-universal-v$v.apk" -NewName "Doodle Movies-Universal-v$v.apk"
+          Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-armeabi-v7a-v$v.apk" -NewName "Doodle Movies-32bit-v$v.apk"
+          Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-arm64-v8a-v$v.apk" -NewName "Doodle Movies-64bit-v$v.apk"
+      
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release
+          path: |
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v${{ env.VERSION }}.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v${{ env.VERSION }}.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v${{ env.VERSION }}.apk
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: |
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v${{ env.VERSION }}.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v${{ env.VERSION }}.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v${{ env.VERSION }}.apk
+          tag: v${{ env.VERSION }}
+          token: ${{secrets.SECRET_KEY}}
+          prerelease: true
+          allowUpdates: true
+          omitBody: true
+
+jobs:
+    name: Build & AAB
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v3.12.0  # Update from v3.12.0 to v4
+        with:
+          distribution: 'temurin'  # Changed from 'oracle' (more reliable on CI)
+          java-version: '17'
+
+      - name: Clone Repository
+        run: git clone -b 4KBUpdate https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git Doodle  # Changed: Clones into shorter "./Doodle"
+
+      - name: Install Dependencies
+        run: |
+          cd Doodle
+          npm install
+
+      - name: Get Version from package.json
+        id: version
+        shell: pwsh
+        run: |
+          $packageJson = Get-Content -Raw -Path "Doodle\package.json" | ConvertFrom-Json
+          echo "VERSION=$($packageJson.version)" >> $env:GITHUB_ENV
+
+      - name: Create keystore file
+        run: |
+          $b64 = "${{ secrets.KEY_STORE }}"
+          $filename = "./Doodle/android/Doodle.jks"
+          $bytes = [Convert]::FromBase64String($b64)
+          [IO.File]::WriteAllBytes($filename, $bytes)
+
+      - name: Create Keystore properties
+        run: |
+          echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ./Doodle/android/key.properties
+          echo storePassword=\${{ secrets.STORE_PASSWORD }} >> ./Doodle/android/key.properties
+          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./Doodle/android/key.properties
+
+      - name: Build App file
+        run: |
+          cd Doodle/android
+          ./gradlew bundleRelease -x lintVitalAnalyzeRelease
+
+      - name: Rename AAB file
+        shell: bash
+        run: |
+          VERSION="${{ env.VERSION }}"
+          AAB_FILE=$(find Doodle/android/app/build/outputs/bundle/release/ -name "*.aab" | head -1)
+          if [ -f "$AAB_FILE" ]; then
+            TARGET_NAME="Doodle.Movies.Bundle-v${VERSION}.aab"
+            TARGET_PATH="Doodle/android/app/build/outputs/bundle/release/${TARGET_NAME}"
+            echo "Found AAB file: $AAB_FILE"
+            echo "Renaming to: $TARGET_NAME"
+            mv "$AAB_FILE" "$TARGET_PATH"
+            echo "AAB renamed successfully."
+          else
+            echo "No AAB file found to rename."
+            exit 1
+          fi
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release
+          path: Doodle/android/app/build/outputs/bundle/release/Doodle.Movies.Bundle-v${{ env.VERSION }}.aab
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: Doodle/android/app/build/outputs/bundle/release/Doodle.Movies.Bundle-v${{ env.VERSION }}.aab
+          tag: v${{ env.VERSION }}
+          token: ${{secrets.SECRET_KEY}}
+          allowUpdates: true
+          omitBody: true
+          prerelease: true
