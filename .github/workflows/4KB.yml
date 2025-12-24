@@ -61,7 +61,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Release
+          name: Release-APKs
           path: |
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v${{ env.VERSION }}.apk
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v${{ env.VERSION }}.apk
@@ -146,7 +146,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Release
+          name: Release-AAB
           path: Doodle/android/app/build/outputs/bundle/release/Doodle.Movies.Bundle-v${{ env.VERSION }}.aab
 
       - name: Create Release
