@@ -1,4 +1,4 @@
-name: "Build & Release"
+name: "4KBUpdate"
 
 on:
   workflow_dispatch:
