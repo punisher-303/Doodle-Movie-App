@@ -13,9 +13,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Java
-        uses: actions/setup-java@v3.12.0  # Update from v3.12.0 to v4
+        uses: actions/setup-java@v3.12.0
         with:
-          distribution: 'temurin'  # Changed from 'oracle' (more reliable on CI)
+          distribution: 'temurin'
           java-version: '17'
 
       - name: Clone Repository
@@ -88,13 +88,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Java
-        uses: actions/setup-java@v3.12.0  # Update from v3.12.0 to v4
+        uses: actions/setup-java@v3.12.0
         with:
-          distribution: 'temurin'  # Changed from 'oracle' (more reliable on CI)
+          distribution: 'temurin'
           java-version: '17'
 
       - name: Clone Repository
-        run: git clone -b 4KBUpdate https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git Doodle  # Changed: Clones into shorter "./Doodle"
+        run: git clone -b 4KBUpdate https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git Doodle
 
       - name: Install Dependencies
         run: |
@@ -126,33 +126,50 @@ jobs:
           cd Doodle/android
           ./gradlew bundleRelease -x lintVitalAnalyzeRelease
 
-      - name: Rename AAB file
+      - name: Rename AAB and Mapping
         shell: bash
         run: |
           VERSION="${{ env.VERSION }}"
+          
+          # Handle AAB
           AAB_FILE=$(find Doodle/android/app/build/outputs/bundle/release/ -name "*.aab" | head -1)
           if [ -f "$AAB_FILE" ]; then
             TARGET_NAME="Doodle.Movies.Bundle-v${VERSION}.aab"
             TARGET_PATH="Doodle/android/app/build/outputs/bundle/release/${TARGET_NAME}"
             echo "Found AAB file: $AAB_FILE"
-            echo "Renaming to: $TARGET_NAME"
             mv "$AAB_FILE" "$TARGET_PATH"
-            echo "AAB renamed successfully."
+            echo "Renamed AAB to: $TARGET_NAME"
           else
-            echo "No AAB file found to rename."
+            echo "No AAB file found."
             exit 1
+          fi
+
+          # Handle Mapping File
+          MAPPING_FILE="Doodle/android/app/build/outputs/mapping/release/mapping.txt"
+          if [ -f "$MAPPING_FILE" ]; then
+            TARGET_MAPPING_NAME="mapping-v${VERSION}.txt"
+            TARGET_MAPPING_PATH="Doodle/android/app/build/outputs/mapping/release/${TARGET_MAPPING_NAME}"
+            echo "Found mapping file: $MAPPING_FILE"
+            mv "$MAPPING_FILE" "$TARGET_MAPPING_PATH"
+            echo "Renamed mapping to: $TARGET_MAPPING_NAME"
+          else
+            echo "WARNING: No mapping.txt file found. Is R8 enabled?"
           fi
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Release-AAB
-          path: Doodle/android/app/build/outputs/bundle/release/Doodle.Movies.Bundle-v${{ env.VERSION }}.aab
+          path: |
+            Doodle/android/app/build/outputs/bundle/release/Doodle.Movies.Bundle-v${{ env.VERSION }}.aab
+            Doodle/android/app/build/outputs/mapping/release/mapping-v${{ env.VERSION }}.txt
 
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: Doodle/android/app/build/outputs/bundle/release/Doodle.Movies.Bundle-v${{ env.VERSION }}.aab
+          artifacts: |
+            Doodle/android/app/build/outputs/bundle/release/Doodle.Movies.Bundle-v${{ env.VERSION }}.aab
+            Doodle/android/app/build/outputs/mapping/release/mapping-v${{ env.VERSION }}.txt
           tag: v${{ env.VERSION }}
           token: ${{secrets.SECRET_KEY}}
           allowUpdates: true
