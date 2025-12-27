@@ -49,7 +49,7 @@ jobs:
       - name: Build App file
         run: |
           cd Doodle/android
-          ./gradlew assembleRelease -x lintVitalAnalyzeRelease
+          ./gradlew assembleRelease
 
       - name: Rename APK files
         run: |
@@ -124,7 +124,7 @@ jobs:
       - name: Build App file
         run: |
           cd Doodle/android
-          ./gradlew bundleRelease -x lintVitalAnalyzeRelease
+          ./gradlew bundleRelease
 
       - name: Rename AAB and Mapping
         shell: bash
