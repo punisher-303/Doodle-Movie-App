@@ -1,4 +1,4 @@
-name: "Build & Release"
+name: "4KBUpdate"
 
 on:
   workflow_dispatch:
@@ -13,10 +13,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Java
-        uses: actions/setup-java@v4  # Update from v3.12.0 to v4
+        uses: actions/setup-java@v3.12.0
         with:
-          distribution: 'temurin'  # Changed from 'oracle' (more reliable on CI)
-          java-version: '21'
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Clone Repository
         run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git Doodle
@@ -49,7 +49,7 @@ jobs:
       - name: Build App file
         run: |
           cd Doodle/android
-          ./gradlew assembleRelease -x lintVitalAnalyzeRelease
+          ./gradlew assembleRelease
 
       - name: Rename APK files
         run: |
@@ -57,39 +57,19 @@ jobs:
           Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-universal-v$v.apk" -NewName "Doodle Movies-Universal-v$v.apk"
           Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-armeabi-v7a-v$v.apk" -NewName "Doodle Movies-32bit-v$v.apk"
           Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-arm64-v8a-v$v.apk" -NewName "Doodle Movies-64bit-v$v.apk"
-      
-      - name: Verify 16KB Alignment
-        run: |
-          $v = "${{ env.VERSION }}"
-          # Find the user's Android SDK build-tools zipalign executable
-          $zipalign = Get-ChildItem -Path "$env:ANDROID_HOME\build-tools" -Filter zipalign.exe -Recurse | Select-Object -Last 1
-          Write-Host "Using zipalign: $($zipalign.FullName)"
-          
-          # List of files to verify
-          $apks = @(
-            "./Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v$v.apk",
-            "./Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v$v.apk",
-            "./Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v$v.apk"
-          )
-          # Verification Loop
-          foreach ($apk in $apks) {
-            Write-Host "Verifying alignment for: $apk"
-            # -c: check, -v: verbose, -P 16: 16KB page align, 4: 4-byte zip align
-            & $zipalign.FullName -c -v -P 16 4 $apk
-            if ($LASTEXITCODE -ne 0) {
-              Write-Error "Verification failed for $apk"
-              exit 1
-            }
-          }
+          Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-x86-v$v.apk" -NewName "Doodle Movies-x86-v$v.apk"
+          Rename-Item -Path "./Doodle/android/app/build/outputs/apk/release/Doodle-x86_64-v$v.apk" -NewName "Doodle Movies-x86_64-v$v.apk"
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Release
+          name: Release-APKs
           path: |
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v${{ env.VERSION }}.apk
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v${{ env.VERSION }}.apk
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v${{ env.VERSION }}.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-x86-v${{ env.VERSION }}.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-x86_64-v${{ env.VERSION }}.apk
 
       - name: Create Release
         uses: ncipollo/release-action@v1
@@ -98,8 +78,106 @@ jobs:
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-Universal-v${{ env.VERSION }}.apk
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-32bit-v${{ env.VERSION }}.apk
             Doodle/android/app/build/outputs/apk/release/Doodle Movies-64bit-v${{ env.VERSION }}.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-x86-v${{ env.VERSION }}.apk
+            Doodle/android/app/build/outputs/apk/release/Doodle Movies-x86_64-v${{ env.VERSION }}.apk
           tag: v${{ env.VERSION }}
           token: ${{secrets.SECRET_KEY}}
           prerelease: true
           allowUpdates: true
           omitBody: true
+
+  AAB_Build:
+    name: Build & AAB
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v3.12.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Clone Repository
+        run: git clone https://${{secrets.SECRET_KEY}}@github.com/punisher-303/DoodleMoviesApp.git Doodle
+
+      - name: Install Dependencies
+        run: |
+          cd Doodle
+          npm install
+
+      - name: Get Version from package.json
+        id: version
+        shell: pwsh
+        run: |
+          $packageJson = Get-Content -Raw -Path "Doodle\package.json" | ConvertFrom-Json
+          echo "VERSION=$($packageJson.version)" >> $env:GITHUB_ENV
+
+      - name: Create keystore file
+        run: |
+          $b64 = "${{ secrets.KEY_STORE }}"
+          $filename = "./Doodle/android/Doodle.jks"
+          $bytes = [Convert]::FromBase64String($b64)
+          [IO.File]::WriteAllBytes($filename, $bytes)
+
+      - name: Create Keystore properties
+        run: |
+          echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ./Doodle/android/key.properties
+          echo storePassword=\${{ secrets.STORE_PASSWORD }} >> ./Doodle/android/key.properties
+          echo keyAlias=\${{ secrets.KEY_ALIAS }} >> ./Doodle/android/key.properties
+
+      - name: Build App file
+        run: |
+          cd Doodle/android
+          ./gradlew bundleRelease
+
+      - name: Rename AAB and Mapping
+        shell: bash
+        run: |
+          VERSION="${{ env.VERSION }}"
+          
+          # Handle AAB
+          AAB_FILE=$(find Doodle/android/app/build/outputs/bundle/release/ -name "*.aab" | head -1)
+          if [ -f "$AAB_FILE" ]; then
+            TARGET_NAME="Doodle.Movies.Bundle-v${VERSION}.aab"
+            TARGET_PATH="Doodle/android/app/build/outputs/bundle/release/${TARGET_NAME}"
+            echo "Found AAB file: $AAB_FILE"
+            mv "$AAB_FILE" "$TARGET_PATH"
+            echo "Renamed AAB to: $TARGET_NAME"
+          else
+            echo "No AAB file found."
+            exit 1
+          fi
+
+          # Handle Mapping File
+          MAPPING_FILE="Doodle/android/app/build/outputs/mapping/release/mapping.txt"
+          if [ -f "$MAPPING_FILE" ]; then
+            TARGET_MAPPING_NAME="mapping-v${VERSION}.txt"
+            TARGET_MAPPING_PATH="Doodle/android/app/build/outputs/mapping/release/${TARGET_MAPPING_NAME}"
+            echo "Found mapping file: $MAPPING_FILE"
+            mv "$MAPPING_FILE" "$TARGET_MAPPING_PATH"
+            echo "Renamed mapping to: $TARGET_MAPPING_NAME"
+          else
+            echo "WARNING: No mapping.txt file found. Is R8 enabled?"
+          fi
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release-AAB
+          path: |
+            Doodle/android/app/build/outputs/bundle/release/Doodle.Movies.Bundle-v${{ env.VERSION }}.aab
+            Doodle/android/app/build/outputs/mapping/release/mapping-v${{ env.VERSION }}.txt
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: |
+            Doodle/android/app/build/outputs/bundle/release/Doodle.Movies.Bundle-v${{ env.VERSION }}.aab
+            Doodle/android/app/build/outputs/mapping/release/mapping-v${{ env.VERSION }}.txt
+          tag: v${{ env.VERSION }}
+          token: ${{secrets.SECRET_KEY}}
+          allowUpdates: true
+          omitBody: true
+          prerelease: true
