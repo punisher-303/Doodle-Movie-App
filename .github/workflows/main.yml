@@ -1,4 +1,4 @@
-name: "4KBUpdate"
+name: "ANDROID APK AND AAB"
 
 on:
   workflow_dispatch:
