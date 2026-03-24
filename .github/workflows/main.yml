@@ -24,7 +24,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd Doodle
-          npm install
+          npm install --legacy-peer-deps
 
       - name: Get Version from package.json
         id: version
@@ -105,7 +105,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd Doodle
-          npm install
+          npm install --legacy-peer-deps
 
       - name: Get Version from package.json
         id: version
