@@ -1,6 +1,6 @@
 {
-  "version": "1.0.1",
-  "download_url": "https://github.com/punisher-303/Doodle-Movie-App/releases/download/v1.1.0/app-release.apk",
+  "version": "10.1.0",
+  "download_url": "https://play.google.com/store/apps/details?id=com.doodle.movies",
   "changelog": "- Complete rewrite of the video playback core engine\n- Super-smooth high display refresh 120 FPS on Android\n- Dynamic local settings persistence\n- Anti-Popup Redirect blockers active on FilmU, Vaplayer, and VidFast\n- Elegant categories load limits on home screen",
   "button_name": "Install APK Now",
   "popup_title": "Spectacular Update Available!"
