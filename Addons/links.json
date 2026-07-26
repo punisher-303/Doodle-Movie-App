@@ -12,5 +12,13 @@
       "label": "My Custom Nuvio Scraper",
       "enabled": true
     }
+  ],
+  "plugins": [
+    {
+      "url": "https://raw.githubusercontent.com/punisher-303/example-plugin/main/manifest.json",
+      "type": "plugin",
+      "label": "My Custom Plugin Example",
+      "enabled": false
+    }
   ]
 }
