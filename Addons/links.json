@@ -5,12 +5,6 @@
       "type": "stremio",
       "label": "Torrentio Addon",
       "enabled": true
-    },
-    {
-      "url": "https://raw.githubusercontent.com/D3adlyRocket/All-in-One-Nuvio/refs/heads/main/manifest.json",
-      "type": "nuvio",
-      "label": "My Custom Nuvio Scraper",
-      "enabled": true
     }
   ],
   "plugins": [
@@ -19,6 +13,12 @@
       "type": "plugin",
       "label": "My Custom Plugin Example",
       "enabled": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/D3adlyRocket/All-in-One-Nuvio/refs/heads/main/manifest.json",
+      "type": "nuvio",
+      "label": "My Custom Nuvio Scraper",
+      "enabled": true
     }
   ]
 }
