@@ -1,0 +1,21 @@
+{
+  "currency": "USD",
+  "monthlyGoal": {
+    "progressPercent": 75.0,
+    "monthLabel": "August"
+  },
+  "donations": [
+    {
+      "id": "donation-1",
+      "name": "John Doe",
+      "date": "2026-08-09T12:00:00Z",
+      "message": "Love the app, keep it up!"
+    },
+    {
+      "id": "donation-2",
+      "name": "Anonymous",
+      "date": "2026-08-08T15:30:00Z",
+      "message": ""
+    }
+  ]
+}
