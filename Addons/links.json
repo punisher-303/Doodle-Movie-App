@@ -2,8 +2,86 @@
   "addons": [
     {
       "url": "https://torrentio.strem.fun/manifest.json",
-      "type": "stremio",
+      "type": "",
       "label": "Torrentio Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://pengu.uk/%7B%22auth_token%22%3A%22JF7rLUx-pjz3UAiDoVHYFIM-y7q5PG6UQOYentG_WKw%22%7D/manifest.json",
+      "type": "pengu",
+      "label": "Torrentio Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://7a82163c306e-stremio-netflix-catalog-addon.baby-beamup.club/manifest.json",
+      "type": "stremio",
+      "label": "Netflix Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://94c8cb9f702d-tmdb-addon.baby-beamup.club/manifest.json",
+      "type": "stremio",
+      "label": "TMDB Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://aio.pantelx.com/manifest.json",
+      "type": "stremio",
+      "label": "AIOCatalogs Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://1fe84bc728af-imdb-catalogs.baby-beamup.club/manifest.json",
+      "type": "stremio",
+      "label": "IMDB Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://aiostreams.elfhosted.com/stremio/manifest.json",
+      "type": "stremio",
+      "label": "AIOStreams Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://stremio-addons.net/api/manifest.json",
+      "type": "stremio",
+      "label": "stremio Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://opensubtitlesv3-pro.dexter21767.com/manifest.json",
+      "type": "stremio",
+      "label": "opensubtitles Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://addon-marvel.gonp.deno.net/manifest.json",
+      "type": "stremio",
+      "label": "Marvel Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://torrentsdb.com/manifest.json",
+      "type": "stremio",
+      "label": "TorrentsDB Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://hdhub.thevolecitor.qzz.io/eyJ0b3Jib3giOiJ1bnNldCIsInF1YWxpdGllcyI6IjIxNjBwLDEwODBwLDcyMHAiLCJzb3J0IjoiZGVzYyJ9/manifest.json",
+      "type": "stremio",
+      "label": "HdHub Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://indtorrents.codecrafts.workers.dev/manifest.json",
+      "type": "stremio",
+      "label": "IndTorrents Addon",
+      "enabled": true
+    },
+    {
+      "url": "https://bharat-binge.semi-column.workers.dev/manifest.json",
+      "type": "stremio",
+      "label": "Bharat Binge Addon",
       "enabled": true
     }
   ],
